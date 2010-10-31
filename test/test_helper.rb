@@ -4,9 +4,5 @@ require 'rubygems'
 require 'amp-front'
 require 'amp-core'
 require 'amp-git'
-require 'spec'
-require 'spec/autorun'
-
-Spec::Runner.configure do |config|
-  
-end
+require 'test/unit'
+AmpTestCase = Test::Unit::TestCase
