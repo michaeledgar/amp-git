@@ -84,7 +84,7 @@ class TestPackfileIndexV2 < AmpTestCase
              ["004EB28B17D7FC33C7B90D2B37E79566038E29C1", 0x001a82fe],
              ["00D917561EB69F243B326DAAA13F7C09D505DB9C", 0x0003518e]]
     pairs.each do |hsh, expected|
-      assert_equal expected, @index.offset_for_hash(hsh.unhexlify)
+      assert_equal expected, @index.offset_for_hash(StringUtils.unhexlify(hsh))
     end
   end
 end

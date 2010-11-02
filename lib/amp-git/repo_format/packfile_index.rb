@@ -83,7 +83,7 @@ module Amp
           # uses fanout logic to determine the indices in which the desired
           # hash might be found. This range can be searched to find the hash.
           def search_range_for_hash(hash)
-            byte = hash[0,1].ord
+            byte = Support::StringUtils.ord(hash[0,1])
             min = byte > 0 ? (fanout[byte - 1]) : 0
             max = fanout[byte]
             min...max

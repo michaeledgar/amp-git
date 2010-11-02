@@ -80,7 +80,7 @@ module Amp
             def read_little_endian_base128(fp)
               result = shift = 0
               begin
-                byte = fp.read(1).ord
+                byte = Support::StringUtils.ord(fp.read(1))
                 result |= (byte & 0x7f) << shift
                 shift += 7
               end while byte & 0x80 > 0
@@ -95,7 +95,7 @@ module Amp
               # a copy from an input stream, or an "insert" which inserts specified
               # data.
               def self.parse(fp)
-                opcode = fp.read(1).ord
+                opcode = Support::StringUtils.ord(fp.read(1))
                 if opcode & 0x80 == 0
                   InsertHunk.new(opcode, fp)
                 else
@@ -140,13 +140,13 @@ module Amp
                 @offset = @length = 0
                 shift = 0
                 0.upto(3) do
-                  @offset |= fp.read(1).ord << shift if opcode & 0x01 > 0
+                  @offset |= Support::StringUtils.ord(fp.read(1)) << shift if opcode & 0x01 > 0
                   opcode >>= 1
                   shift += 8
                 end
                 shift = 0
                 0.upto(2) do
-                  @length |= fp.read(1).ord << shift if opcode & 0x01 > 0
+                  @length |= Support::StringUtils.ord(fp.read(1)) << shift if opcode & 0x01 > 0
                   opcode >>= 1
                   shift += 8
                 end

@@ -10,6 +10,7 @@ class Amp::Plugins::Git < Amp::Plugins::Base
       module Core
         module Repositories
           module Git
+            include Support
             autoload :LocalRepository,         "amp-git/repositories/local_repository.rb"
             autoload :GitPicker,               "amp-git/repository.rb"
             autoload :StagingArea,             "amp-git/repo_format/staging_area.rb"

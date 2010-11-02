@@ -94,10 +94,10 @@ module Amp
               # @param [IO, #read] fp the IO stream to read from
               # @return [Integer] the offset read
               def read_offset(fp)
-                byte = fp.read(1).ord
+                byte = Support::StringUtils.ord(fp.read(1))
                 tot = byte & 0x7f
                 while (byte & 0x80) > 0
-                  byte = fp.read(1).ord
+                  byte = Support::StringUtils.ord(fp.read(1))
                   tot = ((tot + 1) << 7) | (byte & 0x7f)
                   break if (byte & 0x80) == 0
                 end
@@ -112,12 +112,12 @@ module Amp
               # @return [Array(Integer, Integer)] the type and size of the entry packed
               #   into a tuple.
               def read_header(fp)
-                tags = fp.read(1).ord
+                tags = Support::StringUtils.ord(fp.read(1))
                 type = (tags & 0x70) >> 4
                 size = tags & 0xF
                 shift = 4
                 while tags & 0x80 > 0
-                  tags = fp.read(1).ord
+                  tags = Support::StringUtils.ord(fp.read(1))
                   size += (tags & 0x7F) << shift
                   shift += 7
                 end
@@ -159,8 +159,8 @@ module Amp
             def calculate_hash!
               prefix = PREFIX_NAME_LOOKUP[self.type]
               # add special cases for refs
-              self.hash_id = "#{prefix} #{self.size}\0#{self.content}".sha1.digest
-              self.hash_id.force_encoding("ASCII-8BIT") if ruby_19?
+              self.hash_id = StringUtils.sha1("#{prefix} #{self.size}\0#{self.content}").digest
+              self.hash_id.force_encoding("ASCII-8BIT") if RUBY_VERSION < "1.9"
             end
             
             ##
@@ -236,7 +236,7 @@ module Amp
           #   packfile.
           def object_for_hash(given_hash)
             @opener.open(name, "r") do |fp|
-              given_hash.force_encoding("ASCII-8BIT") if ruby_19?
+              given_hash.force_encoding("ASCII-8BIT") if RUBY_VERSION < "1.9"
               entry = nil
               if index
                 starting_at = index.offset_for_hash(given_hash)

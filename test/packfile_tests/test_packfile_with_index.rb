@@ -47,7 +47,7 @@ class TestPackfileWithIndex < AmpTestCase
   end
   
   def test_commit_lookup
-    some_commit_obj = @packfile.object_for_hash("862a669a8ddf39a4c60be6bd40c97dc242b6128e".unhexlify)
+    some_commit_obj = @packfile.object_for_hash(StringUtils.unhexlify("862a669a8ddf39a4c60be6bd40c97dc242b6128e"))
     assert_not_nil some_commit_obj
     assert_kind_of CommitObject, some_commit_obj
     assert_equal "2ac9f8fa1628a094cced3534b63084d5f480d10a", some_commit_obj.tree_ref.hexlify
@@ -60,16 +60,16 @@ class TestPackfileWithIndex < AmpTestCase
   
   # The previous test gets the first commit. no searching going on. This gets a further one.
   def test_further_lookup
-    some_commit_obj = @packfile.object_for_hash("958cd2af1c2676e9e90c7ea45bfe384acdcf42e0".unhexlify)
+    some_commit_obj = @packfile.object_for_hash(StringUtils.unhexlify("958cd2af1c2676e9e90c7ea45bfe384acdcf42e0"))
     assert_not_nil some_commit_obj
   end
   
   def test_tree_lookup
-    some_tree_obj = @packfile.object_for_hash("2ac9f8fa1628a094cced3534b63084d5f480d10a".unhexlify)
+    some_tree_obj = @packfile.object_for_hash(StringUtils.unhexlify("2ac9f8fa1628a094cced3534b63084d5f480d10a"))
     assert_not_nil some_tree_obj
     entry_names = %w(.document .gitignore LICENSE README.md Rakefile VERSION lib spec yard-struct.gemspec).sort
     assert_equal entry_names, some_tree_obj.entry_names.sort
-    lookedup_entry = TreeObject::TreeEntry.new("Rakefile", 0100644, "53bbb0b38868a1bd2059a1174f54de63764013af".unhexlify)
+    lookedup_entry = TreeObject::TreeEntry.new("Rakefile", 0100644, StringUtils.unhexlify("53bbb0b38868a1bd2059a1174f54de63764013af"))
     assert_equal lookedup_entry, some_tree_obj.tree_lookup("Rakefile")
   end
   
