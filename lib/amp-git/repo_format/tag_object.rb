@@ -39,7 +39,7 @@ module Amp
           # parses the object.
           #
           # @param [String] hsh the hash to use to find the object
-          # @param [Amp::Opener] opener the opener to use to open the
+          # @param [Support::RootedOpener] opener the opener to use to open the
           #   object file
           # @param [String] content if the content is known already, use
           #   the provided content instead

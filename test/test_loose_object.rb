@@ -26,7 +26,7 @@ class TestGitLooseObject < AmpTestCase
     self.write_file "objects/ab/looseobject3" do |io|
       io << "blob 0\0hellogarbage"
     end
-    @opener = Amp::Opener.new(tempdir)
+    @opener = Amp::Core::Support::RootedOpener.new(tempdir)
     @opener.default = :open_file
   end
   

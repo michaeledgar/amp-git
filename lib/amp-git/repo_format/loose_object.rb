@@ -65,7 +65,7 @@ module Amp
           # an opener. The opener should point to the .git directory.
           #
           # @param [String] hsh the hash to use to find the object
-          # @param [Amp::Opener] opener the opener to use to open the
+          # @param [Support::RootedOpener] opener the opener to use to open the
           #   object file
           def initialize(hsh, opener, content = nil)
             @hash_id, @opener, @content = hsh, opener, content

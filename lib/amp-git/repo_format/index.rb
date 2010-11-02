@@ -42,7 +42,7 @@ module Amp
           # status lookups and so on.
           #
           # @param [String] file the name of the file to open
-          # @param [Amp::Opener] opener an opener to scope the opening of files
+          # @param [Support::RootedOpener] opener an opener to scope the opening of files
           # @return [AbstractIndex] the index subclass this file represents
           def self.parse(file, opener)
             opener.open(file, "r") do |fp|

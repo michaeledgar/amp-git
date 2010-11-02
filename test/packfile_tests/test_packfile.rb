@@ -20,7 +20,7 @@ class TestPackfile < AmpTestCase
   PACK_FILE = "pack-4e1941122fd346526b0a3eee2d92f3277a0092cd.pack"
   
   def setup
-    @opener = Amp::Opener.new(File.expand_path(File.dirname(__FILE__)))
+    @opener = Amp::Core::Support::RootedOpener.new(File.expand_path(File.dirname(__FILE__)))
     @opener.default = :open_file # for testing purposes!
     @packfile = PackFile.new(PACK_FILE, @opener)
   end

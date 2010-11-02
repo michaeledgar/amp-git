@@ -20,7 +20,7 @@ class TestGitIndex < AmpTestCase
   
   def setup
     super
-    @opener = Amp::Opener.new(File.expand_path(File.dirname(__FILE__)))
+    @opener = Amp::Core::Support::RootedOpener.new(File.expand_path(File.dirname(__FILE__)))
     @opener.default = :open_file # for testing purposes!
     @index = Amp::Core::Repositories::Git::Index.parse(INPUT_FILE, @opener)
   end
@@ -37,7 +37,7 @@ class TestGitIndex < AmpTestCase
     self.write_file "fakeindex" do |io|
       io << "DIRT\x00\x00\x00\x02"
     end
-    opener = Amp::Opener.new(tempdir)
+    opener = Amp::Core::Support::RootedOpener.new(tempdir)
     opener.default = :open_file
     assert_raises Index::IndexParseError do
       Amp::Core::Repositories::Git::Index.parse("fakeindex", opener)

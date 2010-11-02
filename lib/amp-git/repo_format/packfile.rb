@@ -166,7 +166,7 @@ module Amp
             ##
             # Converts to an actual raw object.
             #
-            # @param [Amp::Opener] an opener in case this object references other things....
+            # @param [Support::RootedOpener] an opener in case this object references other things....
             #   should usually be set
             # @return [RawObject] this entry in raw object form
             def to_raw_object(opener = nil)
@@ -192,7 +192,7 @@ module Amp
           # fast lookups later. It also verifies the fourcc of the packfile.
           #
           # @param [String] name the name of the packfile. This is relative to the directory it's in.
-          # @param [Amp::Opener] opener an opener that should be relative to the .git directory.
+          # @param [Support::RootedOpener] opener an opener that should be relative to the .git directory.
           def initialize(name, opener)
             @name = name
             @opener = opener

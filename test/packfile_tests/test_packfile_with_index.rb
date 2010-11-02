@@ -21,7 +21,7 @@ class TestPackfileWithIndex < AmpTestCase
   PACK_FILE = "hasindex.pack"
   
   def setup
-    @opener = Amp::Opener.new(File.expand_path(File.dirname(__FILE__)))
+    @opener = Amp::Core::Support::RootedOpener.new(File.expand_path(File.dirname(__FILE__)))
     @opener.default = :open_file # for testing purposes!
     @packfile = PackFile.new(PACK_FILE, @opener)
   end

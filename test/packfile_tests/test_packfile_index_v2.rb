@@ -25,7 +25,7 @@ class TestPackfileIndexV2 < AmpTestCase
   BIG_INDEX_FILE = "pack-d23ff2538f970371144ae7182c28730b11eb37c1.idx"
   
   def setup
-    @opener = Amp::Opener.new(File.expand_path(File.dirname(__FILE__)))
+    @opener = Amp::Core::Support::RootedOpener.new(File.expand_path(File.dirname(__FILE__)))
     @opener.default = :open_file # for testing purposes!
     fp = @opener.open(BIG_INDEX_FILE)
     @index = PackFileIndex.parse(fp)
