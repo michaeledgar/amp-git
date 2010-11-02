@@ -35,11 +35,13 @@ module Amp
         # you have to uncompress each object in a raw, then calculate the hash of
         # the object, just to find out where each object is and what its hash is.
         class PackFile
+          include Amp::Core::Support
           ##
           # A single entry in a packfile. Dumb struct. However, it has some smart
           # class methods for parsing these bad boys in from a packfile. Take a
           # look at {#at} and {#read}.
           class PackFileEntry < Struct.new(:type, :size, :content, :hash_id, :reference, :offset, :delta_offset)
+            include Amp::Core::Support
             class << self
               
               ##
@@ -74,7 +76,7 @@ module Amp
                   
                 elsif result.type == OBJ_OFS_DELTA
                   cur = fp.tell
-                  patch = Amp::Repositories::Git::Encoding::BinaryDelta.new(result.content)
+                  patch = Amp::Core::Repositories::Git::Encoding::BinaryDelta.new(result.content)
                   previous = self.at(fp, result.delta_offset)
                   result.content = patch.apply(previous.content)
                   result.size = result.content.size
@@ -160,7 +162,7 @@ module Amp
               prefix = PREFIX_NAME_LOOKUP[self.type]
               # add special cases for refs
               self.hash_id = StringUtils.sha1("#{prefix} #{self.size}\0#{self.content}").digest
-              self.hash_id.force_encoding("ASCII-8BIT") if RUBY_VERSION < "1.9"
+              self.hash_id.force_encoding("ASCII-8BIT") if RUBY_VERSION >= "1.9"
             end
             
             ##
@@ -236,7 +238,7 @@ module Amp
           #   packfile.
           def object_for_hash(given_hash)
             @opener.open(name, "r") do |fp|
-              given_hash.force_encoding("ASCII-8BIT") if RUBY_VERSION < "1.9"
+              given_hash.force_encoding("ASCII-8BIT") if RUBY_VERSION >= "1.9"
               entry = nil
               if index
                 starting_at = index.offset_for_hash(given_hash)

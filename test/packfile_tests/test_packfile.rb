@@ -49,8 +49,8 @@ class TestPackfile < AmpTestCase
     some_commit_obj = @packfile.object_for_hash(StringUtils.unhexlify("862a669a8ddf39a4c60be6bd40c97dc242b6128e"))
     assert_not_nil some_commit_obj
     assert_kind_of CommitObject, some_commit_obj
-    assert_equal "2ac9f8fa1628a094cced3534b63084d5f480d10a", some_commit_obj.tree_ref.hexlify
-    assert_equal ["840c43e100120cd282cf9b334b08aa5fbe2634a0"], some_commit_obj.parent_refs.map {|x| x.hexlify}
+    assert_equal "2ac9f8fa1628a094cced3534b63084d5f480d10a", Amp::Core::Support::StringUtils.hexlify(some_commit_obj.tree_ref)
+    assert_equal ["840c43e100120cd282cf9b334b08aa5fbe2634a0"], some_commit_obj.parent_refs.map {|x| Amp::Core::Support::StringUtils.hexlify(x)}
     assert_equal "Michael Edgar <michael.j.edgar@dartmouth.edu>", some_commit_obj.author
     assert_equal "Michael Edgar <michael.j.edgar@dartmouth.edu>", some_commit_obj.committer
     assert_equal Time.at(1273260273), some_commit_obj.date

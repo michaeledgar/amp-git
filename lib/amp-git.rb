@@ -31,7 +31,7 @@ class Amp::Plugins::Git < Amp::Plugins::Base
         end
       end
     end
-
+    require 'zlib'
   }
   class << self
     attr_reader :loader
@@ -42,7 +42,7 @@ class Amp::Plugins::Git < Amp::Plugins::Base
   
   def load!
     puts "Loading amp-git..."
-    require 'amp-git/repository'
+    require 'zlib'
     self.class.loader.call
   end
 end
