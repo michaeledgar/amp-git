@@ -185,7 +185,7 @@ module Amp
             offset = @fp.read(4).unpack("N").first
             if offset & 0x80000000 != 0
               @fp.seek(big_offset_table_offset + 8 * (offset & 0x7fffffff))
-              offset = @fp.read(8).unpack("Q").first.byte_swap_64
+              offset = Support::EncodingUtils.network_to_host_64(@fp.read(8).unpack("Q").first)
             end
             offset
           end
