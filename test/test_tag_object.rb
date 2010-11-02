@@ -45,7 +45,7 @@ EOF
   end
   
   def test_object
-    assert_equal Amp::Core::Support::StringUtils.unhexlify("437b1b20df4b356c9342dac8d38849f24ef44f27"), @tag_obj.object_ref
+    assert_equal unhexlify("437b1b20df4b356c9342dac8d38849f24ef44f27"), @tag_obj.object_ref
   end
   
   def test_reffed_type

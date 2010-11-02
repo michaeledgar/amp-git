@@ -27,6 +27,13 @@ class AmpTestCase < MiniTest::Unit::TestCase
     FileUtils.rm_rf @tempdir if defined?(@tempdir) && @tempdir && File.exist?(@tempdir)
   end
 
+  def hexlify(input)
+    Amp::Core::Support::StringUtils.hexlify(input)
+  end
+  
+  def unhexlify(input)
+    Amp::Core::Support::StringUtils.unhexlify(input)
+  end
   
   # taken from rubygems
   def write_file(path)

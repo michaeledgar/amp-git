@@ -35,11 +35,11 @@ class TestGitCommitObject < AmpTestCase
   end
   
   def test_tree_ref
-    assert_equal Amp::Core::Support::StringUtils.unhexlify("ecb7b4460825bed7c0bc6d17004816d15ae32c5e"), @commit_obj.tree_ref
+    assert_equal unhexlify("ecb7b4460825bed7c0bc6d17004816d15ae32c5e"), @commit_obj.tree_ref
   end
   
   def test_parent_refs
-    assert_equal [Amp::Core::Support::StringUtils.unhexlify("8c27219d73786aa2e91d5ae964624ef36696c307")], @commit_obj.parent_refs
+    assert_equal [unhexlify("8c27219d73786aa2e91d5ae964624ef36696c307")], @commit_obj.parent_refs
   end
   
   def test_author
