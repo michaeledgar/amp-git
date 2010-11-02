@@ -16,7 +16,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
 
 class TestPackfile < AmpTestCase
-  include Amp::Repositories::Git
+  include Amp::Core::Repositories::Git
   PACK_FILE = "pack-4e1941122fd346526b0a3eee2d92f3277a0092cd.pack"
   
   def setup
@@ -38,7 +38,7 @@ class TestPackfile < AmpTestCase
     class_eval <<-EOF
       def test_header_#{idx}
         input = StringIO.new(#{input.map {|x| x.chr}.join.inspect})
-        type, size = Amp::Repositories::Git::PackFile::PackFileEntry.read_header(input)
+        type, size = Amp::Core::Repositories::Git::PackFile::PackFileEntry.read_header(input)
         assert_equal #{output[0]}, type
         assert_equal #{output[1]}, size
       end

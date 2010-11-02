@@ -15,14 +15,14 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
 
 class TestGitIndex < AmpTestCase
-  include Amp::Repositories::Git
+  include Amp::Core::Repositories::Git
   INPUT_FILE = "index"
   
   def setup
     super
     @opener = Amp::Opener.new(File.expand_path(File.dirname(__FILE__)))
     @opener.default = :open_file # for testing purposes!
-    @index = Amp::Repositories::Git::Index.parse(INPUT_FILE, @opener)
+    @index = Amp::Core::Repositories::Git::Index.parse(INPUT_FILE, @opener)
   end
   
   def test_open_index
@@ -40,7 +40,7 @@ class TestGitIndex < AmpTestCase
     opener = Amp::Opener.new(tempdir)
     opener.default = :open_file
     assert_raises Index::IndexParseError do
-      Amp::Repositories::Git::Index.parse("fakeindex", opener)
+      Amp::Core::Repositories::Git::Index.parse("fakeindex", opener)
     end
   end
   

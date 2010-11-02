@@ -16,7 +16,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
 
 class TestPackfileWithIndex < AmpTestCase
-  include Amp::Repositories::Git
+  include Amp::Core::Repositories::Git
   INDEX_FILE = "hasindex.idx"
   PACK_FILE = "hasindex.pack"
   
@@ -39,7 +39,7 @@ class TestPackfileWithIndex < AmpTestCase
     class_eval <<-EOF
       def test_header_#{idx}
         input = StringIO.new(#{input.map {|x| x.chr}.join.inspect})
-        type, size = Amp::Repositories::Git::PackFile::PackFileEntry.read_header(input)
+        type, size = Amp::Core::Repositories::Git::PackFile::PackFileEntry.read_header(input)
         assert_equal #{output[0]}, type
         assert_equal #{output[1]}, size
       end

@@ -22,7 +22,7 @@ class TestGitCommitObject < AmpTestCase
                "Edgar <michael.j.edgar@dartmouth.edu> 1273865360 -0400\ncommitter "+
                "Michael Edgar <michael.j.edgar@dartmouth.edu> 1273865360 -0400\n\n"+
                "Removed the gemspec from the repo\n"
-    @commit_obj = Amp::Repositories::Git::CommitObject.new(@content.sha1, nil, @content)
+    @commit_obj = Amp::Core::Repositories::Git::CommitObject.new(@content.sha1, nil, @content)
   end
   
   def test_correct_type

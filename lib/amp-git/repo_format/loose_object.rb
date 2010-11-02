@@ -19,57 +19,59 @@
 # http://book.git-scm.com/7_how_git_stores_objects.html
 
 module Amp
-  module Repositories
-    module Git
-      ##
-      # = LooseObject
-      #
-      # A single loose object (tree, tag, commit, etc.) in the Git system.
-      # Its type and content will be determined after we read the file.
-      #
-      # It is uniquely identified by a SHA1 hash.
-      class LooseObject < RawObject
-        
-        class << self
-          
-          def lookup(hsh, opener)
-            require 'scanf'
-            path = File.join("objects", hsh[0..1], hsh[2..40])
-            mode = "r"
-            type, content = nil, nil
-            begin
-              opener.open(path, mode) do |fp|
-                type, content_size = fp.scanf("%s %d")
-                fp.seek(type.size + 1 + content_size.to_s.size + 1, IO::SEEK_SET)
-                content = fp.read(content_size)
-              end
-            rescue SystemCallError
-              if create
-                FileUtils.mkdir_p(opener.join("objects", hsh[0..1]))
-                mode = "w+"
-                retry
-              else
-                raise
-              end
-            end
-            
-            RawObject.construct(hsh, opener, type, content)
-          end
-        end
-        
-        attr_accessor :type
-        
+  module Core
+    module Repositories
+      module Git
         ##
-        # Initializes the RawObject. Needs a hash to identify it and
-        # an opener. The opener should point to the .git directory.
+        # = LooseObject
         #
-        # @param [String] hsh the hash to use to find the object
-        # @param [Amp::Opener] opener the opener to use to open the
-        #   object file
-        def initialize(hsh, opener, content = nil)
-          @hash_id, @opener, @content = hsh, opener, content
+        # A single loose object (tree, tag, commit, etc.) in the Git system.
+        # Its type and content will be determined after we read the file.
+        #
+        # It is uniquely identified by a SHA1 hash.
+        class LooseObject < RawObject
+          
+          class << self
+            
+            def lookup(hsh, opener)
+              require 'scanf'
+              path = File.join("objects", hsh[0..1], hsh[2..40])
+              mode = "r"
+              type, content = nil, nil
+              begin
+                opener.open(path, mode) do |fp|
+                  type, content_size = fp.scanf("%s %d")
+                  fp.seek(type.size + 1 + content_size.to_s.size + 1, IO::SEEK_SET)
+                  content = fp.read(content_size)
+                end
+              rescue SystemCallError
+                if create
+                  FileUtils.mkdir_p(opener.join("objects", hsh[0..1]))
+                  mode = "w+"
+                  retry
+                else
+                  raise
+                end
+              end
+              
+              RawObject.construct(hsh, opener, type, content)
+            end
+          end
+          
+          attr_accessor :type
+          
+          ##
+          # Initializes the RawObject. Needs a hash to identify it and
+          # an opener. The opener should point to the .git directory.
+          #
+          # @param [String] hsh the hash to use to find the object
+          # @param [Amp::Opener] opener the opener to use to open the
+          #   object file
+          def initialize(hsh, opener, content = nil)
+            @hash_id, @opener, @content = hsh, opener, content
+          end
+        
         end
-      
       end
     end
   end

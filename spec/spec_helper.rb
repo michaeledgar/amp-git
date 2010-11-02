@@ -7,6 +7,8 @@ require 'amp-git'
 require 'spec'
 require 'spec/autorun'
 
+Amp::Plugins::Core.new.load!
+Amp::Plugins::Git.new.load!
 Spec::Runner.configure do |config|
   
 end

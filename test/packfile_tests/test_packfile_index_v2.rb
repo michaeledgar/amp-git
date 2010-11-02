@@ -21,7 +21,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'test_helper'))
 # with a modest 1k entries in it, which will test its searching abilities a bit
 # better.
 class TestPackfileIndexV2 < AmpTestCase
-  include Amp::Repositories::Git
+  include Amp::Core::Repositories::Git
   BIG_INDEX_FILE = "pack-d23ff2538f970371144ae7182c28730b11eb37c1.idx"
   
   def setup

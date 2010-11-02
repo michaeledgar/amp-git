@@ -32,7 +32,7 @@ nLE/L9aUXdWeTFPron96DLA=
 =2E+0
 -----END PGP SIGNATURE-----
 EOF
-    @tag_obj = Amp::Repositories::Git::TagObject.new(@content.sha1, nil, @content)
+    @tag_obj = Amp::Core::Repositories::Git::TagObject.new(@content.sha1, nil, @content)
   end
   
   def test_correct_type
