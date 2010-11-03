@@ -32,6 +32,7 @@ class Amp::Plugins::Git < Amp::Plugins::Base
       end
     end
     require 'zlib'
+    require 'stringio'
   }
   class << self
     attr_reader :loader
