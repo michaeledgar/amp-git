@@ -12,8 +12,6 @@
 #                                                                #
 ##################################################################
 
-p $:
-p $"
 module Amp
   module Core
     module Repositories    
@@ -21,7 +19,7 @@ module Amp
         
         class GitPicker < Amp::Core::Repositories::GenericRepoPicker
           
-          def self.pick(config, path='', create=false)
+          def pick(config, path='', create=false)
             # hot path so we don't load the HTTP repos!
             unless path[0,4] == "http"
               return LocalRepository.new(find_repo(path), create, config)
@@ -29,7 +27,7 @@ module Amp
             raise "Unknown repository format for Git"
           end
           
-          def self.repo_in_dir?(path)
+          def repo_in_dir?(path)
             return true if path[0, 4] == "http"
             until File.directory? File.join(path, ".git")
               old_path, path = path, File.dirname(path)
@@ -43,7 +41,7 @@ module Amp
           ################################
           private
           ################################
-          def self.find_repo(path)
+          def find_repo(path)
             until File.directory? File.join(path, ".git")
               old_path, path = path, File.dirname(path)
               if path == old_path
