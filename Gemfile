@@ -11,4 +11,5 @@ group :development do
   gem 'yard'
   gem 'cucumber'
   gem 'devver-construct', :require => 'construct'
+  gem 'minitest'
 end
