@@ -45,7 +45,7 @@ module Amp
             until File.directory? File.join(path, ".git")
               old_path, path = path, File.dirname(path)
               if path == old_path
-                raise "No Repository Found"
+                raise ArgumentError.new("No Repository Found")
               end
             end
             path

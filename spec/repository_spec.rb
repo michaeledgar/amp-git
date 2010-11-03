@@ -30,10 +30,44 @@ describe Amp::Core::Repositories::Git::GitPicker do
     it 'returns false if there is no .git directory' do
       within_construct do |c|
         c.directory 'my_repo' do |dir|
-          dir.directory '.hg' do |final|
-            Amp::Core::Repositories::Git::GitPicker.new.repo_in_dir?(final.to_s).should be_false
-          end
+          dir.directory '.hg'
+          dir.directory '.svn'
+          Amp::Core::Repositories::Git::GitPicker.new.repo_in_dir?(dir.to_s).should be_false
         end
+      end
+    end
+  end
+  
+  describe '#pick' do
+    it 'returns a LocalRepository object' do
+      within_construct do |c|
+        c.directory 'my_repo' do |dir|
+          dir.directory '.git'
+          repo = Amp::Core::Repositories::Git::GitPicker.new.pick({}, dir.to_s)
+          repo.should be_a(Amp::Core::Repositories::Git::LocalRepository)
+        end
+      end
+    end
+    
+    it 'returns nil when no .hg found' do
+      within_construct do |c|
+        c.directory 'my_repo' do |dir|
+          dir.directory '.hg'
+          dir.directory '.svn'
+          lambda {
+            repo = Amp::Core::Repositories::Git::GitPicker.new.pick({}, dir.to_s)
+          }.should raise_error(ArgumentError)
+        end
+      end
+    end
+  end
+  
+  it 'is used by Amp::Core::Repositories.pick' do
+    within_construct do |c|
+      c.directory 'my_repo' do |dir|
+        dir.directory '.git'
+        repo = Amp::Core::Repositories.pick({}, dir.to_s)
+        repo.should be_a(Amp::Core::Repositories::Git::LocalRepository)
       end
     end
   end

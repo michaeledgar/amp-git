@@ -17,7 +17,7 @@ module Amp
     module Repositories    
       module Git
         
-        class LocalRepository < Amp::Repositories::AbstractLocalRepository
+        class LocalRepository < Amp::Core::Repositories::AbstractLocalRepository
           
           attr_accessor :root
           attr_accessor :config
@@ -35,7 +35,7 @@ module Amp
             @git_opener  = Support::RootedOpener.new @root # this will open relative to root/.git
             @git_opener.default  = :open_git     # just with different defaults
             
-            @staging_area = Amp::Repositories::Git::StagingArea.new self
+            @staging_area = Amp::Core::Repositories::Git::StagingArea.new self
             
             if create
               init

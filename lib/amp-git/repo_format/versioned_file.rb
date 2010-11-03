@@ -19,7 +19,7 @@ module Amp
     # This class allows you to access a file at a given revision in the repo's
     # history. You can compare them, sort them, access the changeset, and
     # all sorts of stuff.
-    class VersionedFile < Amp::Repositories::AbstractVersionedFile
+    class VersionedFile < Amp::Core::Repositories::AbstractVersionedFile
       
       attr_accessor :revision
       attr_accessor :path

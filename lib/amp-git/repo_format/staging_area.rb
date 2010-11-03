@@ -16,7 +16,7 @@ module Amp
   module Core
     module Repositories
       module Git
-        class StagingArea < Amp::Repositories::AbstractStagingArea
+        class StagingArea < Amp::Core::Repositories::AbstractStagingArea
           
           attr_accessor :repo
           
