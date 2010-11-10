@@ -13,6 +13,7 @@ class Amp::Plugins::Git < Amp::Plugins::Base
             include Support
             autoload :LocalRepository,         "amp-git/repositories/local_repository.rb"
             autoload :GitPicker,               "amp-git/repository.rb"
+            autoload :NodeId,                  "amp-git/repo_format/node_id.rb"
             autoload :StagingArea,             "amp-git/repo_format/staging_area.rb"
             autoload :RawObject,               "amp-git/repo_format/raw_object.rb"
             autoload :LooseObject,             "amp-git/repo_format/loose_object.rb"
