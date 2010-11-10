@@ -59,6 +59,7 @@ module Amp
                 raise DeltaError.new("Expected input data to be #{@base_length} bytes, but was #{original.size} bytes.")
               end
               output = StringIO.new
+              output.string.force_encoding('BINARY') if output.string.respond_to?(:force_encoding)
               @hunks.each do |hunk|
                 hunk.apply(output, original)
               end
