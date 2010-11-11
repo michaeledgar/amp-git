@@ -22,7 +22,6 @@ require 'spec'
 require 'spec/autorun'
 require 'construct'
 
-Amp::Plugins::Core.new.load!
 Amp::Plugins::Git.new.load!
 Spec::Runner.configure do |config|
   
