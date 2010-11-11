@@ -8,7 +8,6 @@ require 'test/unit'
 require 'minitest/unit'
 require 'tmpdir'
 
-Amp::Plugins::Git.new.load!
 class AmpTestCase < MiniTest::Unit::TestCase
   def setup
     super
