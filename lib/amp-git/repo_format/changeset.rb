@@ -200,7 +200,7 @@ module Amp
       
     end
     
-    class WorkingDirectoryChangeset < Amp::Repositories::AbstractChangeset
+    class WorkingDirectoryChangeset < Amp::Core::Repositories::AbstractChangeset
       
       attr_accessor :repo
       alias_method :repository, :repo
