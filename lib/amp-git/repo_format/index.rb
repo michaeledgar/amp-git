@@ -91,6 +91,7 @@ module Amp
                 header = fp.read(ENTRY_HEADER_SIZE).unpack(ENTRY_HEADER_FORMAT)
                 self.ctime, self.ctime_ns, self.mtime, self.mtime_ns, self.dev, self.inode, 
                             self.mode, self.uid, self.gid, self.size, self.hash_id, flags = header
+                self.hash_id = NodeId.from_bin(self.hash_id)
                 self.assume_valid  = flags & 0x8000 > 0
                 self.update_needed = flags & 0x4000 > 0
                 self.stage  = (flags & 0x3000) >> 12

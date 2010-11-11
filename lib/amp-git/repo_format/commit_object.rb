@@ -63,9 +63,9 @@ module Amp
             lines.each_with_index do |line, idx|
               case line
               when /^tree (.{40})/
-                @tree_ref = Support::StringUtils.unhexlify($1)
+                @tree_ref = NodeId.from_hex($1)
               when /^parent (.{40})/
-                @parent_refs << Support::StringUtils.unhexlify($1)
+                @parent_refs << NodeId.from_hex($1)
               when /^author #{AUTHOR_MATCH}/
                 @author = "#{$1} <#{$2}>"
                 @date = Time.at($3.to_i)

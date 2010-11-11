@@ -96,10 +96,10 @@ module Amp
               # @param [IO, #read] fp the IO stream to read from
               # @return [Integer] the offset read
               def read_offset(fp)
-                byte = Support::StringUtils.ord(fp.read(1))
+                byte = Support::HexString.from_bin(fp.read(1)).ord
                 tot = byte & 0x7f
                 while (byte & 0x80) > 0
-                  byte = Support::StringUtils.ord(fp.read(1))
+                  byte = Support::HexString.from_bin(fp.read(1)).ord
                   tot = ((tot + 1) << 7) | (byte & 0x7f)
                   break if (byte & 0x80) == 0
                 end
@@ -114,12 +114,12 @@ module Amp
               # @return [Array(Integer, Integer)] the type and size of the entry packed
               #   into a tuple.
               def read_header(fp)
-                tags = Support::StringUtils.ord(fp.read(1))
+                tags = Support::HexString.from_bin(fp.read(1)).ord
                 type = (tags & 0x70) >> 4
                 size = tags & 0xF
                 shift = 4
                 while tags & 0x80 > 0
-                  tags = Support::StringUtils.ord(fp.read(1))
+                  tags = Support::HexString.from_bin(fp.read(1)).ord
                   size += (tags & 0x7F) << shift
                   shift += 7
                 end
@@ -161,8 +161,7 @@ module Amp
             def calculate_hash!
               prefix = PREFIX_NAME_LOOKUP[self.type]
               # add special cases for refs
-              self.hash_id = StringUtils.sha1("#{prefix} #{self.size}\0#{self.content}").digest
-              self.hash_id.force_encoding("ASCII-8BIT") if RUBY_VERSION >= "1.9"
+              self.hash_id = NodeId.sha1("#{prefix} #{self.size}\0#{self.content}")
             end
             
             ##
@@ -238,7 +237,7 @@ module Amp
           #   packfile.
           def object_for_hash(given_hash)
             @opener.open(name, "r") do |fp|
-              given_hash.force_encoding("ASCII-8BIT") if RUBY_VERSION >= "1.9"
+              given_hash.force_encoding("ASCII-8BIT") if given_hash.respond_to?(:force_encoding)
               entry = nil
               if index
                 starting_at = index.offset_for_hash(given_hash)

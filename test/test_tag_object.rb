@@ -33,7 +33,7 @@ nLE/L9aUXdWeTFPron96DLA=
 -----END PGP SIGNATURE-----
 EOF
     @tag_obj = Amp::Core::Repositories::Git::TagObject.new(
-                   Amp::Core::Support::StringUtils.sha1(@content), nil, @content)
+                   NodeId.sha1(@content), nil, @content)
   end
   
   def test_correct_type
@@ -45,7 +45,7 @@ EOF
   end
   
   def test_object
-    assert_equal unhexlify("437b1b20df4b356c9342dac8d38849f24ef44f27"), @tag_obj.object_ref
+    assert_equal NodeId.from_hex("437b1b20df4b356c9342dac8d38849f24ef44f27"), @tag_obj.object_ref
   end
   
   def test_reffed_type

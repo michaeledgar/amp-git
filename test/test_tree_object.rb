@@ -1,4 +1,3 @@
-##################################################################
 #                  Licensing Information                         #
 #                                                                #
 #  The following code is licensed, as standalone code, under     #
@@ -21,7 +20,7 @@ class TestGitTreeObject < AmpTestCase
                "\xE3\xC3\nK\xCD<!\xEA-_\x9E\xDC=40000 examples\x00"+
                "\xAE\xCB\xE9d!|\xB9\xA6\x96\x024],U\xEE\x99\xA2\xEE\xD4\x92"
     @tree_obj = Amp::Core::Repositories::Git::TreeObject.new(
-                    Amp::Core::Support::StringUtils.sha1(@content), nil,@content)
+                    NodeId.sha1(@content), nil,@content)
   end
   
   def test_correct_type
@@ -47,8 +46,8 @@ class TestGitTreeObject < AmpTestCase
   end
   
   def test_parses_refs
-    expected_first = "\xD3\xD5\xED\x9DA4_\xE3\xC3\nK\xCD<!\xEA-_\x9E\xDC="
-    expected_second = "\xAE\xCB\xE9d!|\xB9\xA6\x96\x024],U\xEE\x99\xA2\xEE\xD4\x92"
+    expected_first = NodeId.from_bin("\xD3\xD5\xED\x9DA4_\xE3\xC3\nK\xCD<!\xEA-_\x9E\xDC=")
+    expected_second = NodeId.from_bin("\xAE\xCB\xE9d!|\xB9\xA6\x96\x024],U\xEE\x99\xA2\xEE\xD4\x92")
     assert_equal expected_first, @tree_obj.tree_lookup("example_helper.rb").ref
     assert_equal expected_second, @tree_obj.tree_lookup("examples").ref
   end

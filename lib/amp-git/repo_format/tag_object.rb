@@ -64,7 +64,7 @@ module Amp
             lines.each_with_index do |line, idx|
               case line
               when /^object (.{40})/
-                @object_ref = Support::StringUtils.unhexlify($1)
+                @object_ref = NodeId.from_hex($1)
               when /^type (\S+)/
                 @reffed_type = $1
               when /^tag\s+(.*)\s*$/
