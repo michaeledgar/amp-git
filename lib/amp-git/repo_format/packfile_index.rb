@@ -83,7 +83,7 @@ module Amp
           # uses fanout logic to determine the indices in which the desired
           # hash might be found. This range can be searched to find the hash.
           def search_range_for_hash(hash)
-            byte = Support::StringUtils.ord(hash[0,1])
+            byte = Support::HexString.ord(hash)
             min = byte > 0 ? (fanout[byte - 1]) : 0
             max = fanout[byte]
             min...max
@@ -162,7 +162,7 @@ module Amp
             # TODO: binary search!
             range.each do |idx|
               sha1 = @fp.read(SHA1_SIZE).unpack(SHA1_FORMAT).first # sha1s are 20 bytes
-              return offset_for_index(idx) if sha1 == hsh
+              return offset_for_index(idx) if sha1 == hsh.to_bin
             end
             raise PackFileIndexLookupError.new("Couldn't find the hash #{hsh.inspect} in the packfile index.")
           end

@@ -22,6 +22,14 @@ describe Amp::Core::Repositories::Git::NodeId do
     Subject.from_hex('41').should be
   end
 
+  it 'created from sha1' do
+    Subject.sha1('A').should be
+  end
+
+  it 'is compareable' do
+    Subject.from_bin('A').should == Subject.from_bin('A')
+  end
+
   let :single do
     Subject.from_bin('A')
   end

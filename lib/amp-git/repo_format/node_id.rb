@@ -11,6 +11,5 @@
 ##################################################################
 
 module Amp::Core::Repositories::Git
-  class NodeId < Amp::Core::Support::HexString
-  end
+  NodeId = Amp::Core::Support::HexString
 end

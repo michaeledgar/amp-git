@@ -60,7 +60,7 @@ class TestGitIndex < AmpTestCase
     assert_equal 0x01f5, rakefile_info.uid
     assert_equal 0x14, rakefile_info.gid
     assert_equal 0x05c5, rakefile_info.size
-    assert_equal "53bbb0b38868a1bd2059a1174f54de63764013af", hexlify(rakefile_info.hash_id)
+    assert_equal "53bbb0b38868a1bd2059a1174f54de63764013af", rakefile_info.hash_id.to_hex
     assert_false rakefile_info.assume_valid
     assert_false rakefile_info.update_needed
     assert_equal 0, rakefile_info.stage

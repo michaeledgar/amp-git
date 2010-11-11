@@ -86,7 +86,7 @@ module Amp
             scanner = StringScanner.new(@content)
             until scanner.eos?
               break unless scanner.scan(/(\d+) (\S+?)\x00(.{20})/m)
-              new_entry = TreeEntry.new(scanner[2], scanner[1].to_i(8), scanner[3])
+              new_entry = TreeEntry.new(scanner[2], scanner[1].to_i(8), NodeId.from_bin(scanner[3]))
               @pairs[new_entry.name] = new_entry
             end
           end
