@@ -28,14 +28,14 @@ module Amp
       attr_reader   :revision
       alias_method :repository, :repo
       
-      def initialize(repo, rev)
+      def initialize(repo, short_name)
         @repo       = repo
         if short_name.kind_of?(Integer)
-          @revision = rev
-          @node_id = convert_rev_to_node(rev)
+          @revision = short_name
+          @node_id = convert_rev_to_node(short_name)
         else
-          @revision = convert_node_to_rev(rev)
-          @node_id = rev
+          @revision = convert_node_to_rev(short_name)
+          @node_id = short_name
         end
       end
       
