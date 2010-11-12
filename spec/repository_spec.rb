@@ -49,7 +49,7 @@ describe Amp::Core::Repositories::Git::GitPicker do
       end
     end
     
-    it 'returns nil when no .hg found' do
+    it 'returns nil when no .git found' do
       within_construct do |c|
         c.directory 'my_repo' do |dir|
           dir.directory '.hg'
